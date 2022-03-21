@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542234644935",
+    "project_id": "shakeagram",
+    "storage_bucket": "shakeagram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542234644935:android:4f89e376f8646d103e09e2",
+        "android_client_info": {
+          "package_name": "com.shakeagram.mohrs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542234644935-t751fp1edrg7o54hi53rcgvbrvcs3edp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACIoHfSHzTLoscA8lTO2sAV5BEqC6mzrs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542234644935-t751fp1edrg7o54hi53rcgvbrvcs3edp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
