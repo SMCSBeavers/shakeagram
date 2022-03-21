@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shakeagram/models/authentication.dart';
 import 'package:provider/provider.dart';
+import 'package:shakeagram/models/user_object.dart';
 import 'package:shakeagram/screens/home_page.dart';
 import 'package:shakeagram/screens/sign_in.dart';
 
@@ -46,7 +48,9 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return HomePage(title: title);
+      return HomePage(
+        title: title,
+      );
     }
     return SignInPage(title: title);
   }
