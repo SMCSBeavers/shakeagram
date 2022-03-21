@@ -24,25 +24,30 @@ class App extends StatelessWidget {
           )
         ],
         child: (MaterialApp(
-          title: 'Flutter Demo',
+          title: _title,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const AuthenticationWrapper(),
+          home: AuthenticationWrapper(
+            title: _title,
+          ),
         )));
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({Key? key}) : super(key: key);
+  const AuthenticationWrapper({Key? key, required this.title})
+      : super(key: key);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return const HomePage(title: "Hello");
+      return HomePage(title: title);
     }
-    return SignInPage();
+    return SignInPage(title: title);
   }
 }
