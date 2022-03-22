@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shakeagram/models/authentication.dart';
 import 'package:shakeagram/models/post_object.dart';
 import 'package:shakeagram/models/user_object.dart';
+import 'package:shakeagram/screens/profile_page.dart';
 import 'package:shakeagram/widgets/post.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +38,22 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text(widget.title),
           centerTitle: true,
-          backgroundColor: const Color(0xfffb2e01),
+          backgroundColor: Colors.blue,
+          actions: [
+            IconButton(
+                icon: const Icon(Icons.person),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                title: widget.title,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                }),
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -45,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Color(0xfffb2e01),
+                  color: Colors.blue,
                 ),
                 child: FlutterLogo(
                   size: 50.0,
@@ -68,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: StreamBuilder(
-            stream: FirebaseFirestore.instance
+            stream: firestore
                 .collection('users')
                 .where('uid', isEqualTo: auth.currentUser!.uid)
                 .snapshots(),
@@ -77,9 +94,10 @@ class _HomePageState extends State<HomePage> {
                 UserObject loggedInUser2 =
                     UserObject.fromDocument(snapshot.data!.docs.first);
                 return StreamBuilder(
-                    stream: FirebaseFirestore.instance
+                    stream: firestore
                         .collection('posts')
                         .where('uid', whereIn: loggedInUser2.following)
+                        .orderBy('date', descending: true)
                         .snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
