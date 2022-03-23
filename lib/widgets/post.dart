@@ -4,10 +4,19 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:shakeagram/models/post_object.dart';
 import 'package:shakeagram/models/user_object.dart';
 
+import '../screens/single_post.dart';
+
 class PostWidget extends StatefulWidget {
-  const PostWidget({Key? key, required this.post}) : super(key: key);
+  const PostWidget(
+      {Key? key,
+      required this.post,
+      required this.title,
+      required this.toggleToSinglePost})
+      : super(key: key);
 
   final PostObject post;
+  final String title;
+  final bool toggleToSinglePost;
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -74,11 +83,30 @@ class _PostWidgetState extends State<PostWidget> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Image.network(
-                      widget.post.imageURL,
-                      fit: BoxFit.fitWidth,
+                  GestureDetector(
+                    onDoubleTap: () {
+                      // future like and unlike
+                      print("Double tap! for like");
+                    },
+                    onTap: () {
+                      if (widget.toggleToSinglePost) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SinglePost(
+                                      title: widget.title,
+                                      post: widget.post,
+                                    ))).then((value) {
+                          setState(() {});
+                        });
+                      }
+                    },
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Image.network(
+                        widget.post.imageURL,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                   ),
                   Align(

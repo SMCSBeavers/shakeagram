@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shakeagram/models/post_object.dart';
 import 'package:shakeagram/models/user_object.dart';
+import 'package:shakeagram/screens/single_post.dart';
 import 'package:shakeagram/widgets/profile_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -48,12 +49,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       for (int p = 0; p < snapshot.data!.docs.length; p++) {
                         PostObject post =
                             PostObject.fromDocument(snapshot.data!.docs[p]);
-                        listChildren.add(SizedBox(
-                            width: double.infinity,
-                            child: Image.network(
-                              post.getImageURL,
-                              fit: BoxFit.fitWidth,
-                            )));
+                        listChildren.add(GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SinglePost(
+                                          title: widget.title,
+                                          post: post,
+                                        ))).then((value) {
+                              setState(() {});
+                            });
+                          },
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: Image.network(
+                                post.getImageURL,
+                                fit: BoxFit.fitWidth,
+                              )),
+                        ));
                       }
                       return ListView(
                         children: listChildren,

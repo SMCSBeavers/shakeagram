@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostObject {
-  final int id;
   final String location;
   final String imageURL;
   final List<String> likers;
@@ -10,13 +9,10 @@ class PostObject {
   final DateTime date;
   final String uid;
 
-  PostObject(this.id, this.location, this.imageURL, this.likers,
-      this.description, this.comments, this.date, this.uid);
+  PostObject(this.location, this.imageURL, this.likers, this.description,
+      this.comments, this.date, this.uid);
 
   // Get methods
-  int get getID {
-    return id;
-  }
 
   String get getLocation {
     return location;
@@ -60,7 +56,6 @@ class PostObject {
     }
 
     return PostObject(
-        documentSnapshot['id'],
         documentSnapshot['location'],
         documentSnapshot['imageURL'],
         convertDynamicArrToStringArr(documentSnapshot['likers']),

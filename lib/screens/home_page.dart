@@ -1,12 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:shakeagram/models/authentication.dart';
 import 'package:shakeagram/models/post_object.dart';
 import 'package:shakeagram/models/user_object.dart';
+import 'package:shakeagram/screens/photo_screen.dart';
 import 'package:shakeagram/screens/profile_page.dart';
+import 'package:shakeagram/screens/shake_photo.dart';
 import 'package:shakeagram/widgets/post.dart';
 
 class HomePage extends StatefulWidget {
@@ -55,6 +58,34 @@ class _HomePageState extends State<HomePage> {
                 }),
           ],
         ),
+        bottomNavigationBar:
+            BottomNavigationBar(items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              label: 'Home',
+              icon: IconButton(
+                  icon: const Icon(Icons.home), onPressed: () async {})),
+          BottomNavigationBarItem(
+            label: 'Camera',
+            icon: IconButton(
+              icon: const Icon(Icons.camera),
+              onPressed: () async {
+                List<CameraDescription> cameras = await availableCameras();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShakeCameraScreen(
+                              cameras: cameras,
+                            ))).then((value) {
+                  setState(() {});
+                });
+              },
+            ),
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+        ]),
         drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
@@ -107,7 +138,11 @@ class _HomePageState extends State<HomePage> {
                               // test model
                               PostObject post = PostObject.fromDocument(
                                   snapshot.data!.docs[index]);
-                              return PostWidget(post: post);
+                              return PostWidget(
+                                post: post,
+                                title: widget.title,
+                                toggleToSinglePost: true,
+                              );
                             });
                       } else {
                         return const Center(child: CircularProgressIndicator());
