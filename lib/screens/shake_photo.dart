@@ -10,8 +10,11 @@ import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:sensors_plus/sensors_plus.dart';
 
 class ShakeCameraScreen extends StatefulWidget {
-  const ShakeCameraScreen({Key? key, required this.cameras}) : super(key: key);
+  const ShakeCameraScreen(
+      {Key? key, required this.cameras, required this.title})
+      : super(key: key);
 
+  final String title;
   final List<CameraDescription> cameras;
 
   @override
@@ -119,8 +122,8 @@ class _ShakeCameraScreenState extends State<ShakeCameraScreen> {
           'likers': [],
           'uid': auth.currentUser!.uid,
         })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+        .then((value) => print("Post Added"))
+        .catchError((error) => print("Failed to add post: $error"));
     ;
   }
 
@@ -179,7 +182,7 @@ class _ShakeCameraScreenState extends State<ShakeCameraScreen> {
     return imageToggle
         ? Scaffold(
             appBar: AppBar(
-              title: const Text('a photo'),
+              title: Text(widget.title),
               centerTitle: true,
             ),
             body:
@@ -248,7 +251,7 @@ class _ShakeCameraScreenState extends State<ShakeCameraScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              title: const Text('a photo'),
+              title: Text(widget.title),
               centerTitle: true,
             ),
             body: Stack(

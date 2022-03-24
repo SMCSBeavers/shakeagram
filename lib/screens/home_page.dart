@@ -58,34 +58,22 @@ class _HomePageState extends State<HomePage> {
                 }),
           ],
         ),
-        bottomNavigationBar:
-            BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              label: 'Home',
-              icon: IconButton(
-                  icon: const Icon(Icons.home), onPressed: () async {})),
-          BottomNavigationBarItem(
-            label: 'Camera',
-            icon: IconButton(
-              icon: const Icon(Icons.camera),
-              onPressed: () async {
-                List<CameraDescription> cameras = await availableCameras();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ShakeCameraScreen(
-                              cameras: cameras,
-                            ))).then((value) {
-                  setState(() {});
-                });
-              },
-            ),
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-        ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.camera),
+          onPressed: () async {
+            List<CameraDescription> cameras = await availableCameras();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ShakeCameraScreen(
+                          cameras: cameras,
+                          title: widget.title,
+                        ))).then((value) {
+              setState(() {});
+            });
+          },
+        ),
         drawer: Drawer(
           child: ListView(
             // Important: Remove any padding from the ListView.
@@ -100,10 +88,31 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListTile(
-                title: Text('My Profile - ' + auth.currentUser!.uid),
+                title: const Text('My Profile'),
                 onTap: () {
-                  // Update the state of the app.
-                  // ...
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                title: widget.title,
+                              ))).then((value) {
+                    setState(() {});
+                  });
+                },
+              ),
+              ListTile(
+                title: const Text('My Profile'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                title: widget.title,
+                              ))).then((value) {
+                    setState(() {});
+                  });
                 },
               ),
               ListTile(

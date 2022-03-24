@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:shakeagram/models/user_object.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({Key? key, required this.profile}) : super(key: key);
+  const ProfileCard(
+      {Key? key,
+      required this.profile,
+      required this.isCurrentUser,
+      required this.isFollowing,
+      required this.followFunction})
+      : super(key: key);
 
   final UserObject profile;
+  final bool isCurrentUser;
+  final bool isFollowing;
+  final void Function() followFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -79,17 +88,38 @@ class ProfileCard extends StatelessWidget {
           child:
               Align(alignment: Alignment.center, child: Text(profile.getBio)),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                  onPressed: () {}, child: const Text('Edit Profile')),
-              ElevatedButton(onPressed: () {}, child: const Text('Signout'))
-            ],
-          ),
-        ),
+        isCurrentUser
+            ? Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text('Edit Profile')),
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text('Signout'))
+                  ],
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    isFollowing
+                        ? ElevatedButton(
+                            onPressed: () {
+                              followFunction();
+                            },
+                            child: const Text('Unfollow'))
+                        : ElevatedButton(
+                            onPressed: () {
+                              followFunction();
+                            },
+                            child: const Text('Follow')),
+                  ],
+                ),
+              ),
       ],
     );
   }
