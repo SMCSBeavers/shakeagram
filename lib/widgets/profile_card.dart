@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shakeagram/models/user_object.dart';
+import 'package:shakeagram/screens/edit_profile_screen.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard(
@@ -95,7 +96,14 @@ class ProfileCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                        onPressed: () {}, child: const Text('Edit Profile')),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EditProfileScreen()));
+                        },
+                        child: const Text('Edit Profile')),
                     ElevatedButton(
                         onPressed: () {}, child: const Text('Signout'))
                   ],
