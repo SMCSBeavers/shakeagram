@@ -9,6 +9,7 @@ import 'package:shakeagram/models/post_object.dart';
 import 'package:shakeagram/models/user_object.dart';
 import 'package:shakeagram/screens/photo_screen.dart';
 import 'package:shakeagram/screens/profile_page.dart';
+import 'package:shakeagram/screens/search_screen.dart';
 import 'package:shakeagram/screens/shake_photo.dart';
 import 'package:shakeagram/widgets/post.dart';
 
@@ -102,13 +103,13 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               ListTile(
-                title: const Text('My Profile'),
+                title: const Text('Search'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProfilePage(
+                          builder: (context) => SearchScreen(
                                 title: widget.title,
                               ))).then((value) {
                     setState(() {});
@@ -133,10 +134,14 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                 UserObject loggedInUser2 =
                     UserObject.fromDocument(snapshot.data!.docs.first);
+                List<String> nullCatch = ['default'];
+                if (loggedInUser2.getFollowing.isNotEmpty) {
+                  nullCatch = loggedInUser2.getFollowing;
+                }
                 return StreamBuilder(
                     stream: firestore
                         .collection('posts')
-                        .where('uid', whereIn: loggedInUser2.following)
+                        .where('uid', whereIn: nullCatch)
                         .orderBy('date', descending: true)
                         .snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -25,6 +25,23 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
 
   Future<void> addFollow() async {
     // add following
+    List<String> tempListofFollowing = [];
+    String followingdocumentID = '';
+    await firestore
+        .collection('users')
+        .where('uid', isEqualTo: auth.currentUser!.uid)
+        .snapshots()
+        .first
+        .then((value) {
+      followingdocumentID = value.docs.first.id;
+      for (int r = 0; r < value.docs.first['following'].length; r++) {
+        tempListofFollowing.add(value.docs.first['following'][r]);
+      }
+      tempListofFollowing.add(widget.uid);
+    });
+    await firestore.collection('users').doc(followingdocumentID).update(
+      {'following': tempListofFollowing},
+    ).then((value) {});
     // add followers
     List<String> tempListofFollowers = [];
     String followersdocumentID = '';
@@ -50,8 +67,27 @@ class _OtherProfilePageState extends State<OtherProfilePage> {
   }
 
   Future<void> removeFollow() async {
-    // add following
-    // add followers
+    // remove following
+    List<String> tempListofFollowing = [];
+    String followingdocumentID = '';
+    await firestore
+        .collection('users')
+        .where('uid', isEqualTo: auth.currentUser!.uid)
+        .snapshots()
+        .first
+        .then((value) {
+      followingdocumentID = value.docs.first.id;
+      for (int r = 0; r < value.docs.first['following'].length; r++) {
+        if (value.docs.first['following'][r] == widget.uid) {
+          continue;
+        }
+        tempListofFollowing.add(value.docs.first['following'][r]);
+      }
+    });
+    firestore.collection('users').doc(followingdocumentID).update(
+      {'following': tempListofFollowing},
+    ).then((value) {});
+    // remove followers
     List<String> tempListofFollowers = [];
     String documentID = '';
     await firestore
