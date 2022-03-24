@@ -39,13 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
             if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
               UserObject profile =
                   UserObject.fromDocument(snapshot.data!.docs.first);
-              List<Widget> listChildren = [];
-              listChildren.add(ProfileCard(
-                profile: profile,
-                isCurrentUser: true,
-                isFollowing: false,
-                followFunction: dummyFunction,
-              ));
               return StreamBuilder(
                   stream: firestore
                       .collection('posts')
@@ -54,6 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                      List<Widget> listChildren = [];
+                      listChildren.add(ProfileCard(
+                        profile: profile,
+                        isCurrentUser: true,
+                        isFollowing: false,
+                        followFunction: dummyFunction,
+                      ));
                       for (int p = 0; p < snapshot.data!.docs.length; p++) {
                         PostObject post =
                             PostObject.fromDocument(snapshot.data!.docs[p]);
@@ -81,6 +81,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: listChildren,
                       );
                     } else {
+                      List<Widget> listChildren = [];
+                      listChildren.add(ProfileCard(
+                        profile: profile,
+                        isCurrentUser: true,
+                        isFollowing: false,
+                        followFunction: dummyFunction,
+                      ));
                       return ListView(
                         children: listChildren,
                       );

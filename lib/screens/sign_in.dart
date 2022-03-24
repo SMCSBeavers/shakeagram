@@ -15,7 +15,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xfffb2e01),
+        backgroundColor: Colors.blue,
         title: Text(title),
         centerTitle: true,
       ),
@@ -63,8 +63,8 @@ class SignInPage extends StatelessWidget {
             },
             child: const Text("Submit"),
             style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(const Color(0xfffb2e01)),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  Color.fromARGB(255, 1, 68, 251)),
             ),
           ),
         ),
