@@ -26,6 +26,7 @@ class App extends StatelessWidget {
           )
         ],
         child: (MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: _title,
           theme: ThemeData(
             primarySwatch: Colors.blue,

@@ -48,6 +48,7 @@ class SignInPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            obscureText: true,
             controller: passwordController,
             decoration: const InputDecoration(
                 border: OutlineInputBorder(), label: Text("Password")),
@@ -64,7 +65,7 @@ class SignInPage extends StatelessWidget {
             child: const Text("Submit"),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 1, 68, 251)),
+                  const Color.fromARGB(255, 1, 68, 251)),
             ),
           ),
         ),

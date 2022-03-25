@@ -83,6 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
+                    obscureText: true,
                     controller: _password,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), label: Text("Password")),
